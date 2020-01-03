@@ -134,11 +134,37 @@ var UiController = (function() {
         dateLabel : '.budget__title--month'
     };
 
+     var formatNumber = function(num, type) {
+        var integer, decimal, numSplit, sign ;
+        num = Math.abs(num);
+        num = num.toFixed(2);
+
+        numSplit = num.split('.');
+
+        integer = numSplit[0];
+
+        if(integer.length > 3){
+            integer = integer.substr(0,integer.length-3) + ',' + integer.substr(integer.length-3,3);
+        }
+        
+        decimal = numSplit[1];
+        
+        type === 'exp' ? sign = '-' : sign = '+';
+
+        return (sign + ' ' + integer + '.' + decimal); 
+    };
+
+    var nodeListForEach = function(list, callback){
+        for(var i = 0 ; i < list.length ; i++){
+            callback(list[i], i);
+        }
+    }
+
 })();
 
 var AppController = (function(budgetCtrl, UICtrl) {
 
-    
+
     var eventListeners = function() {
  
         var DOM = UICtrl.getDomSelectors();
