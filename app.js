@@ -246,6 +246,24 @@ var UiController = (function() {
             var day = currentDate.getDate();
 
             document.querySelector(DomSelectors.dateLabel).textContent = months[month] + ', ' + year; 
+        },
+
+        changeType: function(){
+
+            var fields = document.querySelectorAll(
+                DomSelectors.inputType + ',' + DomSelectors.inputDescription + ','
+                + DomSelectors.inputValue
+            );
+            
+            nodeListForEach(fields, function(cur) {
+                cur.classList.toggle('red-focus');
+            });
+
+            document.querySelector(DomSelectors.inputButton).classList.toggle('red');
+        },
+
+        getDomSelectors: function() {
+            return DomSelectors;
         }
     }
 
