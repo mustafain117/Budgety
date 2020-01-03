@@ -45,6 +45,75 @@ var budgetCalc = (function() {
         budget: 0,
         percentage: -1
     };
+
+     return {
+        addItem : function(type, description, val){
+            var item;
+            var ID = 10;
+            
+            //generate new id
+            if (data.allItems[type].length > 0) {
+                ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                ID = 0;
+            }
+            if(type === 'exp'){
+                item = new Expense(ID, description, val);
+            } else if(type === 'inc'){
+                item = new Income(ID, description, val);
+            }
+            data.allItems[type].push(item);
+            return item;
+        },
+
+        deleteItem: function(type, id) {
+            
+            var ids = data.allItems[type].map(function(curr){
+                return curr.id;
+            });
+
+            index = ids.indexOf(id);
+            if(index !== -1) {
+                data.allItems[type].splice(index,1);
+            }
+        },
+        calulateBudget : function() {
+           
+            //calc total exp and inc
+            calculateTotal('inc');
+            calculateTotal('exp');
+            
+            //calc budget
+            data.budget = data.totals.inc - data.totals.exp;
+            //calc percentage of income spent
+            if(data.totals.inc > 0){
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+            }else{
+                data.percentage = -1;
+            }
+        },
+
+        calculatePercentages: function() {
+            data.allItems.exp.forEach(function(curr){
+                curr.calcPercentage(data.totals.inc);
+            });
+        },
+        getPercentages: function() {
+            var percentages = data.allItems.exp.map(function(curr) {
+                return curr.getPercentage();
+            });
+            return percentages;
+        },
+        getBudget : function() {
+            return {
+                budget : data.budget,
+                totalInc : data.totals.inc,
+                totalExp : data.totals.exp,
+                percentage : data.percentage
+            };
+        },
+    };
+
 })();
 
 var UiController = (function() {
