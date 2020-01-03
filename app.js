@@ -24,6 +24,27 @@ var budgetCalc = (function() {
         this.value = value;
     };
 
+
+    var calculateTotal = function(type) {
+        var total = 0;
+        data.allItems[type].forEach(function(cur) {
+            total += cur.value;
+        });
+        data.totals[type] = total;
+    };
+
+    var data = {
+        allItems : {
+            exp : [],
+            inc : []
+        },
+        totals: {
+            exp : 0,
+            inc : 0
+        },
+        budget: 0,
+        percentage: -1
+    };
 })();
 
 var UiController = (function() {
