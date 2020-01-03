@@ -203,6 +203,49 @@ var UiController = (function() {
             });
 
             fieldsArray[0].focus();
+        },
+
+        displayBudget: function(obj) {
+            var type;
+            
+            obj.budget > 0 ? type = 'inc' : type = 'exp';
+
+            document.querySelector(DomSelectors.budgetLabel).textContent = formatNumber(obj.budget, type);
+            document.querySelector(DomSelectors.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+            document.querySelector(DomSelectors.expenseLabel).textContent = formatNumber(obj.totalExp, 'exp');
+            
+            if(obj.percentage > 0) {
+                document.querySelector(DomSelectors.percentageLabel).textContent = obj.percentage + '%';
+            }else{
+                 document.querySelector(DomSelectors.percentageLabel).textContent = '---';
+            }
+        },
+
+        displayPercentages: function(percentages) {
+            var labels = document.querySelectorAll(DomSelectors.expensesPercentages);
+
+            nodeListForEach(labels, function(current, index){
+                
+                if(percentages[index] > 0 ){
+                    current.textContent = percentages[index] + '%';
+                }else{
+                    current.textContent = '---';
+                }
+            });
+        },
+
+        displayDate: function(){
+            
+            var currentDate = new Date();
+
+            var year = currentDate.getFullYear();
+
+            var months = ['January' , 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var month = currentDate.getMonth();
+
+            var day = currentDate.getDate();
+
+            document.querySelector(DomSelectors.dateLabel).textContent = months[month] + ', ' + year; 
         }
     }
 
