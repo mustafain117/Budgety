@@ -133,9 +133,28 @@ var UiController = (function() {
         expensesPercentages : '.item__percentage',
         dateLabel : '.budget__title--month'
     };
-    
+
 })();
 
 var AppController = (function(budgetCtrl, UICtrl) {
+
+    
+    var eventListeners = function() {
+ 
+        var DOM = UICtrl.getDomSelectors();
+ 
+        document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
+
+        document.addEventListener('keypress', function(event) {
+
+            if(event.keyCode === 13 || event.which === 13){
+            ctrlAddItem();
+            }
+         });
+
+         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+         document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changeType);
+    };
 
 })(budgetCalc,UiController);
