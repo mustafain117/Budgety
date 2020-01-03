@@ -158,6 +158,36 @@ var UiController = (function() {
         for(var i = 0 ; i < list.length ; i++){
             callback(list[i], i);
         }
+    };
+
+    return {
+
+        getInput : function () {
+            return{
+                type : document.querySelector(DomSelectors.inputType).value,
+                description : document.querySelector(DomSelectors.inputDescription).value,
+                value : parseFloat(document.querySelector(DomSelectors.inputValue).value)
+            };
+        },
+        addListItem : function(item, type) {
+            var html, element, newHtml;
+            // Create html placeholder string
+            if(type === 'inc'){
+                element = DomSelectors.incomeContainer;
+                html = '<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            } else {
+                element = DomSelectors.expenseContainer;
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            }
+            
+            // Replace string with data
+            newHtml = html.replace('%id%', item.id);
+            newHtml = newHtml.replace('%description%', item.description);
+            newHtml = newHtml.replace('%value%', formatNumber(item.value, type));
+
+            // Insert newHtml into the DOM
+            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        }
     }
 
 })();
