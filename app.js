@@ -353,4 +353,12 @@ var AppController = (function(budgetCtrl, UICtrl) {
         UICtrl.displayBudget(budgetData);
     };
 
+    var updatePercentages = function() {
+        // 1. Calculate percentages
+        budgetCtrl.calculatePercentages();
+        var percentages = budgetCtrl.getPercentages();
+        // 2. Update UI with percentages
+        UICtrl.displayPercentages(percentages);
+    };
+
 })(budgetCalc,UiController);
