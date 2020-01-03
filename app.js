@@ -290,4 +290,29 @@ var AppController = (function(budgetCtrl, UICtrl) {
          document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changeType);
     };
 
+    var ctrlAddItem = function() {
+        
+        var input, item;
+
+        //get input data
+        input = UICtrl.getInput();
+
+        if(input.description !== "" && !isNaN(input.value) && input.value > 0) {
+
+             //add item 
+            item = budgetCtrl.addItem(input.type, input.description, input.value);
+            //update item in ui
+            UICtrl.addListItem(item, input.type);
+
+            //clear fields
+            UICtrl.clearFields();
+        
+             // manage budget
+            updateBudget();
+
+            // Calculate and update expense percentages
+            updatePercentages();
+        }
+    };
+
 })(budgetCalc,UiController);
