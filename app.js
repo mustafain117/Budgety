@@ -315,4 +315,30 @@ var AppController = (function(budgetCtrl, UICtrl) {
         }
     };
 
+    
+    var ctrlDeleteItem = function(event) {
+        var itemID, splitID, type, id;
+
+        itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        
+        if(itemID){
+            splitID = itemID.split('-');
+        }
+        // splitID[1] is the id
+        type = splitID[0];
+        id = parseInt(splitID[1]);
+
+        //1. Delete from data
+        budgetCtrl.deleteItem(type, id);
+        //2. Delete from UI
+        UICtrl.deleteListItem(itemID);
+        //3. Update Budget
+        budgetCtrl.calulateBudget();
+        updateBudget(); 
+
+        //4. update expense percentages
+        updatePercentages();
+    
+    };
+
 })(budgetCalc,UiController);
