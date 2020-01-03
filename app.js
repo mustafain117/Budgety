@@ -361,4 +361,17 @@ var AppController = (function(budgetCtrl, UICtrl) {
         UICtrl.displayPercentages(percentages);
     };
 
+    return {
+        init : function() {
+            UICtrl.displayDate();
+            UICtrl.displayBudget({budget : 0,
+                totalInc : 0,
+                totalExp : 0,
+                percentage : 0});
+            eventListeners();
+        }
+    }
+
 })(budgetCalc,UiController);
+
+controller.init();
