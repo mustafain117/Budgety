@@ -315,7 +315,7 @@ var AppController = (function(budgetCtrl, UICtrl) {
         }
     };
 
-    
+
     var ctrlDeleteItem = function(event) {
         var itemID, splitID, type, id;
 
@@ -339,6 +339,18 @@ var AppController = (function(budgetCtrl, UICtrl) {
         //4. update expense percentages
         updatePercentages();
     
+    };
+
+     var updateBudget = function() {
+        
+        //calc budget
+        budgetCtrl.calulateBudget();
+        
+        //return budget
+        var budgetData = budgetCtrl.getBudget();
+
+        //display budget
+        UICtrl.displayBudget(budgetData);
     };
 
 })(budgetCalc,UiController);
