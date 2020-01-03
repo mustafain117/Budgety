@@ -187,6 +187,22 @@ var UiController = (function() {
 
             // Insert newHtml into the DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        },
+
+        deleteListItem: function(id) {
+           var element = document.getElementById(id);
+           element.parentNode.removeChild(element);
+        },
+
+        clearFields: function() {
+            var fields = document.querySelectorAll(DomSelectors.inputDescription + ', ' + DomSelectors.inputValue);
+            var fieldsArray = Array.prototype.slice.call(fields);
+            
+            fieldsArray.forEach(function(curr) {
+                curr.value = "";
+            });
+
+            fieldsArray[0].focus();
         }
     }
 
